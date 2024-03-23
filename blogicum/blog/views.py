@@ -44,6 +44,7 @@ posts = [
 
 
 def index(request):
+    """Главная страница"""
     template = 'blog/index.html'
     context = {
         'posts': posts
@@ -52,6 +53,7 @@ def index(request):
 
 
 def post_detail(request, id):
+    """Описание записи в блоге"""
     template = 'blog/detail.html'
     context = {
         'post': posts[id]
@@ -60,6 +62,7 @@ def post_detail(request, id):
 
 
 def category_posts(request, category_slug):
+    """Публикация категории"""
     template = 'blog/category.html'
     context = {
         'posts': posts,
