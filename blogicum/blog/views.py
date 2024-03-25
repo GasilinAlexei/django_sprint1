@@ -1,6 +1,10 @@
 from django.shortcuts import render
 
-posts = [
+from django.http import Http404
+
+from typing import List, Dict, Any
+
+posts: List[Dict[str, Any]] = [
     {
         'id': 0,
         'location': 'Остров отчаянья',
@@ -42,6 +46,8 @@ posts = [
                 укутывал их, чтобы не испортились от дождя.''',
     }, ]
 
+posts_dict = {post['id']: post for post in posts}
+
 
 def index(request):
     """Главная страница"""
@@ -52,12 +58,16 @@ def index(request):
     return render(request, template, context)
 
 
-def post_detail(request, id):
+def post_detail(request, post_id):
     """Описание записи в блоге"""
+    try:
+        post = posts_dict.get(post_id)
+        if post is None:
+            raise Http404('Пост не найден')
+    except KeyError:
+        raise Http404('Пост не найден')
     template = 'blog/detail.html'
-    context = {
-        'post': posts[id]
-    }
+    context = {'post': post}
     return render(request, template, context)
 
 
