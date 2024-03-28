@@ -1,8 +1,6 @@
-from django.shortcuts import render
-
-from django.http import Http404
-
 from typing import List, Dict, Any
+from django.shortcuts import render
+from django.http import Http404
 
 posts: List[Dict[str, Any]] = [
     {
@@ -61,9 +59,7 @@ def index(request):
 def post_detail(request, post_id):
     """Описание записи в блоге"""
     try:
-        post = posts_dict.get(post_id)
-        if post is None:
-            raise Http404('Пост не найден')
+        post = posts_dict[post_id]
     except KeyError:
         raise Http404('Пост не найден')
     template = 'blog/detail.html'
